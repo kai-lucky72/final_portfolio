@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwYGFWfOw.woff2)
+    format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+:root {
+  --background: #01010d;
+  --foreground: #f0f0ff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --animate-scroll: scroll 30s linear infinite;
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-reverse {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) linear infinite;
+}
+
+.animate-scroll-reverse {
+  animation: scroll-reverse var(--animation-duration, 40s) linear infinite;
+}
+
+/* Pause scroll animations on hover */
+.pause-on-hover:hover .animate-scroll,
+.pause-on-hover:hover .animate-scroll-reverse {
+  animation-play-state: paused !important;
+}
+
+.pause-moving:hover {
+  animation-play-state: paused !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #01010d;
+    --foreground: #f0f0ff;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Geist", sans-serif;
+}
+
+/* Custom Rectangular Scrollbar */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #01010d;
+    border-radius: 0 !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #181825;
+    border: 1px solid rgba(240, 240, 255, 0.1);
+    border-radius: 0 !important;
+    animation: scrollbarHeartbeat 4s ease-in-out infinite;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #252540;
+    border: 1px solid rgba(240, 240, 255, 0.2);
+    border-radius: 0 !important;
+    animation: none;
+  }
+
+  @keyframes scrollbarHeartbeat {
+    0%,
+    100% {
+      background: #181825;
+      border-color: rgba(240, 240, 255, 0.1);
+    }
+    10% {
+      background: #252540;
+      border-color: rgba(240, 240, 255, 0.3);
+      box-shadow: inset 0 0 10px rgba(240, 240, 255, 0.05);
+    }
+    20% {
+      background: #181825;
+      border-color: rgba(240, 240, 255, 0.1);
+    }
+    30% {
+      background: #252540;
+      border-color: rgba(240, 240, 255, 0.3);
+      box-shadow: inset 0 0 10px rgba(240, 240, 255, 0.05);
+    }
+    40%,
+    100% {
+      background: #181825;
+      border-color: rgba(240, 240, 255, 0.1);
+    }
+  }
+
+  /* Firefox support */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #181825 #01010d;
+  }
+}
