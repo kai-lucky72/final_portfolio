@@ -11,6 +11,29 @@ export default function Reviews() {
 
     const [isPaused, setIsPaused] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const defaultReview = specializationsData[0];
+    const [featuredReview, setFeaturedReview] = useState(defaultReview);
+    const [isSwapped, setIsSwapped] = useState(false);
+
+    const handleCardClick = (rev: any) => {
+        setFeaturedReview({
+            brand: rev.brand,
+            badge: rev.badge,
+            text: rev.text,
+            author: rev.author,
+            image: rev.image
+        });
+        setIsSwapped(true);
+    };
+
+    useEffect(() => {
+        if (!isSwapped) return;
+        const timer = setTimeout(() => {
+            setFeaturedReview(defaultReview);
+            setIsSwapped(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, [isSwapped, defaultReview]);
 
     useEffect(() => {
         const container = scrollRef.current;
@@ -20,10 +43,8 @@ export default function Reviews() {
 
         const scroll = () => {
             if (!isPaused) {
-                container.scrollLeft += 0.8; // Smooth slow scroll
+                container.scrollLeft += 0.8;
 
-                // Seamless loop: reset to 0 when we've scrolled past the first set
-                // (scrollWidth / 2 is the exact middle for doubled data)
                 if (container.scrollLeft >= container.scrollWidth / 2) {
                     container.scrollLeft = 0;
                 }
@@ -90,322 +111,107 @@ export default function Reviews() {
                     </p>
                 </div>
 
-                {/* Alternating Technical Specializations Grid */}
+                {/* Featured Review Card */}
                 <div className="flex flex-col gap-12 mt-12 mb-20">
-                    {specializationsData.slice(0, 3).map((item, idx) => (
-                        <div key={idx} className={`relative grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch ${idx % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
-                            {/* Connecting Stroke */}
-                            <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-[1px] bg-[#181825] z-0">
-                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-[2px] bg-[#01010d] shadow-[0_0_8px_rgba(240,240,255,0.6)]"></div>
-                                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-[2px] bg-[#01010d] shadow-[0_0_8px_rgba(240,240,255,0.6)]"></div>
+                    <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                        {/* Connecting Stroke */}
+                        <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-[1px] bg-[#181825] z-0">
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-[2px] bg-[#01010d] shadow-[0_0_8px_rgba(240,240,255,0.6)]"></div>
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-[2px] bg-[#01010d] shadow-[0_0_8px_rgba(240,240,255,0.6)]"></div>
+                        </div>
+
+                        {/* Image Part */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="relative aspect-video md:aspect-auto md:h-[320px] border border-[#181825] order-1 group"
+                        >
+                            <div className="absolute inset-0 overflow-hidden">
+                                {featuredReview.image ? (
+                                    <Image
+                                        src={featuredReview.image}
+                                        alt={featuredReview.brand}
+                                        fill
+                                        className="object-contain p-4 grayscale group-hover:grayscale-0 transition-all duration-700"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-[#02020a] flex items-center justify-center">
+                                        <span className="text-3xl font-medium text-white/20">{featuredReview.author?.charAt(0) || '?'}</span>
+                                    </div>
+                                )}
                             </div>
 
-                            {/* Image Part */}
-                            <motion.div
-                                initial="initial"
-                                whileHover="hover"
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6 }}
-                                variants={{
-                                    initial: { opacity: 0, x: idx % 2 === 0 ? -20 : 20 },
-                                    hover: {}
-                                }}
-                                className={`relative aspect-video md:aspect-auto md:h-[320px] border border-[#181825] order-1 group ${idx % 2 !== 0 ? 'md:order-2' : ''}`}
-                            >
-                                <div className="absolute inset-0 overflow-hidden">
-                                    <Image
-                                        src={item.image}
-                                        alt={item.brand}
-                                        fill
-                                        className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700"
-                                    />
-                                </div>
+                            {/* Corner Animations */}
+                            <motion.div className="absolute -top-[1px] -left-[1px] w-2 h-2 z-20">
+                                <div className="absolute top-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute top-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                            <motion.div className="absolute -top-[1px] -right-[1px] w-2 h-2 z-20">
+                                <div className="absolute top-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute top-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                            <motion.div className="absolute -bottom-[1px] -left-[1px] w-2 h-2 z-20">
+                                <div className="absolute bottom-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute bottom-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                            <motion.div className="absolute -bottom-[1px] -right-[1px] w-2 h-2 z-20">
+                                <div className="absolute bottom-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute bottom-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                        </motion.div>
 
-                                {/* Corner Animations */}
-                                {/* Top Left */}
-                                <motion.div
-                                    className="absolute -top-[1px] -left-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, -3, 0, 0],
-                                            y: [0, -3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute top-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute top-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
-                                {/* Top Right */}
-                                <motion.div
-                                    className="absolute -top-[1px] -right-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, 3, 0, 0],
-                                            y: [0, -3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute top-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute top-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
-                                {/* Bottom Left */}
-                                <motion.div
-                                    className="absolute -bottom-[1px] -left-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, -3, 0, 0],
-                                            y: [0, 3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute bottom-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute bottom-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
-                                {/* Bottom Right */}
-                                <motion.div
-                                    className="absolute -bottom-[1px] -right-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, 3, 0, 0],
-                                            y: [0, 3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute bottom-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute bottom-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
+                        {/* Text Part */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="relative p-6 md:p-8 md:h-[320px] border border-[#181825] bg-[#01010d] flex flex-col justify-center gap-4 order-2"
+                        >
+                            {/* Slanted Glare Effect */}
+                            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                                <div className="absolute top-0 left-0 h-[40px] z-0" style={{ width: 'calc(100% + 40px)', background: 'linear-gradient(to bottom, rgba(240, 240, 255, 0.10) 0%, rgba(240, 240, 255, 0.05) 25%, rgba(240, 240, 255, 0.02) 50%, rgba(240, 240, 255, 0.01) 70%, transparent 100%)', transform: 'translateX(-20px) rotate(-2deg)', transformOrigin: 'top left' }}></div>
+                            </div>
+                            {/* Corner Animations */}
+                            <motion.div className="absolute -top-[1px] -left-[1px] w-2 h-2 z-20">
+                                <div className="absolute top-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute top-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                            <motion.div className="absolute -top-[1px] -right-[1px] w-2 h-2 z-20">
+                                <div className="absolute top-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute top-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                            <motion.div className="absolute -bottom-[1px] -left-[1px] w-2 h-2 z-20">
+                                <div className="absolute bottom-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute bottom-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
+                            </motion.div>
+                            <motion.div className="absolute -bottom-[1px] -right-[1px] w-2 h-2 z-20">
+                                <div className="absolute bottom-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
+                                <div className="absolute bottom-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
                             </motion.div>
 
-                            {/* Text Part */}
-                            <motion.div
-                                initial="initial"
-                                whileHover="hover"
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6 }}
-                                variants={{
-                                    initial: { opacity: 0, x: idx % 2 === 0 ? 20 : -20 },
-                                    hover: {}
-                                }}
-                                className={`relative p-6 md:p-8 md:h-[320px] border border-[#181825] bg-[#01010d] flex flex-col justify-center gap-4 order-2 ${idx % 2 !== 0 ? 'md:order-1' : ''}`}
-                            >
-                                {/* Slanted Glare Effect - Wrapped for clipping */}
-                                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                                    <div className="absolute top-0 left-0 h-[40px] z-0" style={{ width: 'calc(100% + 40px)', background: 'linear-gradient(to bottom, rgba(240, 240, 255, 0.10) 0%, rgba(240, 240, 255, 0.05) 25%, rgba(240, 240, 255, 0.02) 50%, rgba(240, 240, 255, 0.01) 70%, transparent 100%)', transform: 'translateX(-20px) rotate(-2deg)', transformOrigin: 'top left' }}></div>
+                            <div className="relative w-fit h-[22px] z-10">
+                                <div className="relative h-full border border-[#181825] bg-[#02020d] flex items-center px-3 py-1 text-gray-500">
+                                    <span className="text-[10px] font-medium tracking-widest uppercase text-white opacity-80 whitespace-nowrap">{featuredReview.badge}</span>
                                 </div>
-                                {/* Corner Animations */}
-                                {/* Top Left */}
-                                <motion.div
-                                    className="absolute -top-[1px] -left-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, -3, 0, 0],
-                                            y: [0, -3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute top-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute top-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
-                                {/* Top Right */}
-                                <motion.div
-                                    className="absolute -top-[1px] -right-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, 3, 0, 0],
-                                            y: [0, -3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute top-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute top-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
-                                {/* Bottom Left */}
-                                <motion.div
-                                    className="absolute -bottom-[1px] -left-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, -3, 0, 0],
-                                            y: [0, 3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute bottom-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute bottom-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
-                                {/* Bottom Right */}
-                                <motion.div
-                                    className="absolute -bottom-[1px] -right-[1px] w-2 h-2 z-20"
-                                    variants={{
-                                        initial: { opacity: 1, x: 0, y: 0 },
-                                        hover: {
-                                            opacity: 1,
-                                            x: [0, 3, 0, 0],
-                                            y: [0, 3, 0, 0],
-                                            transition: {
-                                                x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                opacity: { duration: 0.2 }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    <div className="absolute bottom-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                    <div className="absolute bottom-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                </motion.div>
+                            </div>
 
-                                <div className="relative w-fit h-[22px] z-10">
-                                    <div className="relative h-full border border-[#181825] bg-[#02020d] flex items-center px-3 py-1 text-gray-500">
-                                        <span className="text-[10px] font-medium tracking-widest uppercase text-white opacity-80 whitespace-nowrap">{item.badge}</span>
-                                        {/* Corner Animations */}
-                                        {/* Top Left */}
-                                        <motion.div
-                                            variants={{
-                                                initial: { opacity: 1, x: 0, y: 0 },
-                                                hover: {
-                                                    opacity: 1,
-                                                    x: [0, -2, 0, 0],
-                                                    y: [0, -2, 0, 0],
-                                                    transition: {
-                                                        x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        opacity: { duration: 0.2 }
-                                                    }
-                                                }
-                                            }}
-                                            className="absolute top-[-1px] left-[-1px] w-2 h-2"
-                                        >
-                                            <div className="absolute top-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                            <div className="absolute top-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                        </motion.div>
-                                        {/* Top Right */}
-                                        <motion.div
-                                            variants={{
-                                                initial: { opacity: 1, x: 0, y: 0 },
-                                                hover: {
-                                                    opacity: 1,
-                                                    x: [0, 2, 0, 0],
-                                                    y: [0, -2, 0, 0],
-                                                    transition: {
-                                                        x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        opacity: { duration: 0.2 }
-                                                    }
-                                                }
-                                            }}
-                                            className="absolute top-[-1px] right-[-1px] w-2 h-2"
-                                        >
-                                            <div className="absolute top-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                            <div className="absolute top-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                        </motion.div>
-                                        {/* Bottom Left */}
-                                        <motion.div
-                                            variants={{
-                                                initial: { opacity: 1, x: 0, y: 0 },
-                                                hover: {
-                                                    opacity: 1,
-                                                    x: [0, -2, 0, 0],
-                                                    y: [0, 2, 0, 0],
-                                                    transition: {
-                                                        x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        opacity: { duration: 0.2 }
-                                                    }
-                                                }
-                                            }}
-                                            className="absolute bottom-[-1px] left-[-1px] w-2 h-2"
-                                        >
-                                            <div className="absolute bottom-0 left-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                            <div className="absolute bottom-0 left-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                        </motion.div>
-                                        {/* Bottom Right */}
-                                        <motion.div
-                                            variants={{
-                                                initial: { opacity: 1, x: 0, y: 0 },
-                                                hover: {
-                                                    opacity: 1,
-                                                    x: [0, 2, 0, 0],
-                                                    y: [0, 2, 0, 0],
-                                                    transition: {
-                                                        x: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        y: { duration: 4, times: [0, 0.1, 0.2, 1], ease: "easeOut", repeat: Infinity },
-                                                        opacity: { duration: 0.2 }
-                                                    }
-                                                }
-                                            }}
-                                            className="absolute bottom-[-1px] right-[-1px] w-2 h-2"
-                                        >
-                                            <div className="absolute bottom-0 right-0 w-1.5 h-[1px] bg-[#01010d]"></div>
-                                            <div className="absolute bottom-0 right-0 w-[1px] h-1.5 bg-[#01010d]"></div>
-                                        </motion.div>
-                                    </div>
-                                </div>
+                            <h3 className="text-xl md:text-2xl text-white tracking-tight">
+                                {featuredReview.brand}
+                            </h3>
 
-                                <h3 className="text-xl md:text-2xl text-white tracking-tight">
-                                    {item.brand}
-                                </h3>
+                            <p className="text-[#f0f0ff]/50 text-sm md:text-base leading-relaxed line-clamp-6">
+                                {featuredReview.text}
+                            </p>
 
-                                <p className="text-[#f0f0ff]/50 text-sm md:text-base leading-relaxed line-clamp-6">
-                                    {item.text}
-                                </p>
-
-                                <div className="flex items-center gap-3 mt-2">
-                                    <div className="w-6 h-[1px] bg-[#01010d]/30"></div>
-                                    <span className="text-[9px] uppercase tracking-[0.2em] text-[#f0f0ff]/30">{item.author}</span>
-                                </div>
-                            </motion.div>
-                        </div>
-                    ))}
+                            <div className="flex items-center gap-3 mt-2">
+                                <div className="w-6 h-[1px] bg-[#01010d]/30"></div>
+                                <span className="text-[9px] uppercase tracking-[0.2em] text-[#f0f0ff]/30">{featuredReview.author}</span>
+                            </div>
+                        </motion.div>
+                    </div>
                 </div>
 
                 <div
@@ -428,7 +234,8 @@ export default function Reviews() {
                             {[...testimonialsData, ...testimonialsData].map((rev: any, idx) => (
                                 <div
                                     key={idx}
-                                    className="relative p-6 border-t border-x border-[#181825] bg-[#01010d] flex flex-col gap-4 w-[400px] h-[250px] group/card shrink-0"
+                                    onClick={() => handleCardClick(rev)}
+                                    className="relative p-6 border-t border-x border-[#181825] bg-[#01010d] flex flex-col gap-4 w-[400px] h-[250px] group/card shrink-0 cursor-pointer hover:border-[#18182530] transition-colors"
                                 >
                                     {/* Slanted Glare Effect - Wrapped for clipping */}
                                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -460,12 +267,16 @@ export default function Reviews() {
                                     <div className="flex items-center justify-between gap-5 relative z-10">
                                         <div className="flex items-center gap-5">
                                             <div className="w-16 h-16 border border-[#181825] bg-[#02020a] flex items-center justify-center relative overflow-hidden">
-                                                <Image
-                                                    src={rev.image}
-                                                    alt={rev.brand}
-                                                    fill
-                                                    className="object-cover grayscale group-hover/card:grayscale-0 transition-all duration-500"
-                                                />
+                                                {rev.image ? (
+                                                    <Image
+                                                        src={rev.image}
+                                                        alt={rev.brand}
+                                                        fill
+                                                        className="object-contain p-1 grayscale group-hover/card:grayscale-0 transition-all duration-500"
+                                                    />
+                                                ) : (
+                                                    <span className="text-lg font-medium text-white/30">{rev.author?.charAt(0) || '?'}</span>
+                                                )}
                                             </div>
                                             <div>
                                                 <h4 className="text-base font-medium text-white">{rev.brand}</h4>

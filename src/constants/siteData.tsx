@@ -169,54 +169,85 @@ export const testimonials = [];
 
 export const specializationsData = [
     {
-        brand: "Prime Life Technologies",
-        badge: "CEO",
-        text: "Kagabo delivered a robust AI-powered system that transformed how our team handles internal workflows. Her backend expertise and understanding of AI integration made a real difference in our productivity.",
-        author: "",
-        image: "/images/team-1.png"
+        brand: "Prime Life Insurance",
+        badge: "IT Director",
+        text: "Lucky contributed to the development of our Agent Management System and showed strong commitment throughout the project. He was able to understand business requirements, translate them into technical solutions, and contribute effectively to backend development using C# technologies. His professionalism, adaptability, and willingness to learn made him a valuable contributor to the team.",
+        author: "Director Eric",
+        image: "/images/Director Eric.png"
     },
 ];
 
 export const testimonialsData = [
-
     {
-        brand: "Prime Life Technologies",
-        badge: "CEO",
-        text: "Kagabo delivered a robust AI-powered system that transformed how our team handles internal workflows. Her backend expertise and understanding of AI integration made a real difference in our productivity.",
-        author: "",
-        image: "/images/team-1.png",
+        brand: "Calyx / Synapse / Leapable.ai",
+        badge: "Founder & CTO",
+        text: "Working with Lucky on AI-driven product development has been a great experience. He approaches engineering with curiosity, ownership, and a strong desire to understand problems deeply before building solutions. His ability to combine backend engineering with AI concepts has been valuable while working on Bwenge's vision for intelligent enterprise systems. Lucky is someone who learns quickly, takes initiative, and consistently looks for ways to turn ideas into practical technology.",
+        author: "Christopher Royce",
+        image: "/images/Christopher Royce.png",
         githubLink: ""
     },
     {
-        brand: "Bwenge Technologies",
-        badge: "CTO",
-        text: "Working with Kagabo on our backend architecture was seamless. She has a strong grasp of system design and consistently delivers reliable, well-structured code that scales.",
-        author: "",
-        image: "/images/team-2.png",
+        brand: "Rwanda Coding Academy",
+        badge: "Intelligent Robotics Instructor",
+        text: "Lucky demonstrated strong initiative and technical curiosity while working on the Water Meter Reader computer vision project. He showed the ability to move from an idea to a working AI application by combining computer vision concepts, experimentation, and deployment. His willingness to explore challenging technical problems and learn beyond the classroom reflects the mindset of a growing engineer.",
+        author: "Tr Gabriel",
+        image: "/images/Tr Gabriel.png",
         githubLink: ""
     },
     {
-        brand: "NexaTech Solutions",
-        badge: "Technical Lead",
-        text: "Kagabo brings both technical depth and product thinking to every project. Her ability to design intelligent systems while keeping the end user in mind is what sets her apart.",
-        author: "",
-        image: "/images/team-3.png",
+        brand: "Prime Life Insurance",
+        badge: "IT Director",
+        text: "Lucky contributed to the development of our Agent Management System and showed strong commitment throughout the project. He was able to understand business requirements, translate them into technical solutions, and contribute effectively to backend development using C# technologies. His professionalism, adaptability, and willingness to learn made him a valuable contributor to the team.",
+        author: "Director Eric",
+        image: "/images/Director Eric.png",
         githubLink: ""
     },
     {
-        brand: "RCA Faculty",
-        badge: "Lecturer",
-        text: "Kagabo demonstrates a strong foundation in software engineering principles. Her projects show maturity in system design, and she consistently approaches problems with a methodical, engineering-first mindset.",
-        author: "",
-        image: "/images/team-1.png",
-        githubLink: ""
-    },
-    {
-        brand: "Startup Collaborator",
+        brand: "Bwenge",
         badge: "Co-Founder",
-        text: "Kagabo is the kind of engineer who understands both the technical and business side. She helped us build our MVP from scratch, and her work on the backend and AI features was exceptional.",
-        author: "",
-        image: "/images/team-2.png",
+        text: "Working with Lucky as a co-founder has shown me his ability to combine technical skills with product vision. He is highly driven, constantly learning, and willing to take responsibility for challenging problems. His focus on building AI-powered solutions and transforming ideas into working products has been one of the strongest contributions to our journey at Bwenge.",
+        author: "Beni Samuel",
+        image: "/images/beni.png",
+        githubLink: ""
+    },
+    {
+        brand: "NexaTech Rwanda",
+        badge: "Co-Founder",
+        text: "Building NexaTech Rwanda together has been an inspiring journey. Lucky brings strong technical leadership, creativity, and persistence when turning ideas into products. His ability to think about both engineering and the bigger impact of technology makes him a valuable teammate and builder.",
+        author: "Livia",
+        image: "/images/Livia.png",
+        githubLink: ""
+    },
+    {
+        brand: "Rwanda Coding Academy",
+        badge: "Software Engineering Student",
+        text: "Lucky has always been someone who pushes himself to learn and build beyond the normal curriculum. His passion for software engineering, AI, and entrepreneurship is clear through the projects he works on and the problems he chooses to solve.",
+        author: "Mahinga Rodin",
+        image: "/images/mahinga.jpg",
+        githubLink: ""
+    },
+    {
+        brand: "Rwanda Coding Academy",
+        badge: "Software Engineering Student",
+        text: "Lucky stands out through his dedication to technology and continuous improvement. His curiosity, willingness to collaborate, and commitment to building real projects demonstrate the mindset of someone preparing for impactful work in software engineering.",
+        author: "Irere",
+        image: "/images/irere.png",
+        githubLink: ""
+    },
+    {
+        brand: "Shoppa Project",
+        badge: "Software Developer",
+        text: "Working with Lucky on Shoppa showed his ability to take ownership of backend development and contribute to building a real product. He understands how technical decisions connect with user needs and works hard to create reliable solutions.",
+        author: "Irasubiza Nelson",
+        image: "/images/nelson.jpg",
+        githubLink: ""
+    },
+    {
+        brand: "Rwanda Coding Academy",
+        badge: "Software Engineering Student",
+        text: "Lucky is a motivated engineer who consistently explores new technologies and challenges himself through practical projects. His passion for software development and AI inspires those around him.",
+        author: "Ashraf",
+        image: "/images/ashraf.jpg",
         githubLink: ""
     },
 ];
@@ -304,34 +335,74 @@ export const projectData = [
     {
         name: "Argo",
         year: "2025",
-        title: "Enterprise AI Assistant",
-        description: "AI-powered assistant designed to improve workplace productivity by enabling intelligent knowledge retrieval, workflow assistance, and enterprise automation.",
+        title: "AI-Powered Enterprise Assistant",
+        description: "Designed and built the backend in Golang and Python, architected the REST API and gRPC services for AI integration, designed the database schema, system architecture, and deployed using Docker.",
         link: "",
-        image: "/images/team-1.png"
+        image: "",
+        type: "web" as const
+    },
+    {
+        name: "Echelon",
+        year: "2025",
+        title: "SaaS Analytics Platform",
+        description: "Full-stack development using TypeScript for the backend and React for the frontend. Designed the REST API, system architecture, and database schema for a scalable SaaS analytics platform.",
+        link: "",
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/echelon.png",
+        type: "web" as const
+    },
+    {
+        name: "Water Meter Reader",
+        year: "2025",
+        title: "Computer Vision AI System",
+        description: "Full-stack development of an AI-powered computer vision application. Designed the REST API, system architecture, and database for automatic water meter reading extraction from images.",
+        link: "",
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/watermeter.png",
+        type: "web" as const
     },
     {
         name: "Shoppa",
         year: "2025",
         title: "Mobile Commerce Platform",
-        description: "Backend platform supporting digital commerce through secure APIs, authentication, product management, and scalable business logic.",
+        description: "Backend development using Java. Designed the REST API, system architecture, database schema, and deployed the platform using Docker for a reliable e-commerce workflow.",
         link: "",
-        image: "/images/team-2.png"
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/shoppa.png",
+        type: "mobile" as const
     },
     {
-        name: "Water Meter Reader",
+        name: "Pixic",
         year: "2025",
-        title: "Computer Vision AI",
-        description: "AI application that automatically extracts water meter readings from images using computer vision and machine learning. Deployed as an interactive demo on Hugging Face Spaces.",
+        title: "Photography Marketplace Platform",
+        description: "Backend development using NestJS. Designed the REST API, system architecture, and database schema for a marketplace connecting clients with photographers through portfolio-driven discovery.",
         link: "",
-        image: "/images/team-3.png"
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/pixic.png",
+        type: "web" as const
+    },
+    {
+        name: "Estate",
+        year: "2025",
+        title: "Real Estate Management Platform",
+        description: "Full-stack development using FastAPI for the backend and React for the frontend. Designed the REST API, system architecture, and database schema for property discovery and agent management.",
+        link: "",
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/estate.png",
+        type: "web" as const
     },
     {
         name: "Kora",
         year: "2025",
         title: "ERP Intelligence Platform",
-        description: "AI-powered enterprise platform focused on enhancing business operations through intelligent insights and workflow automation.",
+        description: "Full-stack development using Golang and Python for the backend, React for the web frontend, and Electron for the desktop UI. Designed the REST API and gRPC services for AI integration, system architecture, database schema, and deployed using Docker.",
         link: "",
-        image: "/images/team-1.png"
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/kora.png",
+        type: "web" as const
+    },
+    {
+        name: "Tugendane",
+        year: "2025",
+        title: "Ride-Hailing Platform",
+        description: "Backend development using Java. Designed the REST API, system architecture, and database schema for a transportation platform connecting riders and drivers through digital services.",
+        link: "",
+        image: "https://pub-9470d972970443bcae6c7678040244a2.r2.dev/images/tugendane.png",
+        type: "mobile" as const
     }
 ];
 

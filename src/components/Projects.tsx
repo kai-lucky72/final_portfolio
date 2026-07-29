@@ -4,7 +4,6 @@ import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from "fram
 import { FiMail } from 'react-icons/fi';
 import { useState } from "react";
 import { projectData, projectsContent } from "@/constants/siteData";
-import Image from "next/image";
 
 export default function Projects() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -32,11 +31,10 @@ export default function Projects() {
                     filter: 'brightness(1.24)',
                     mixBlendMode: 'normal'
                 }}>
-                <Image
+                <img
                     src="/images/who%20we%20are.avif"
                     alt=""
-                    fill
-                    className="object-cover object-center"
+                    className="w-full h-full object-cover object-center"
                 />
             </div>
             {/* Main Container with Left and Right Borders */}
@@ -207,40 +205,62 @@ export default function Projects() {
 
 
                         {/* Project Image */}
-                        <div className="relative w-full h-[300px] overflow-hidden">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeProject.image}
-                                    variants={{
-                                        initial: { opacity: 0, scale: 1.1 },
-                                        animate: { opacity: 0.6, scale: 1 },
-                                        hover: { opacity: 1 },
-                                        exit: { opacity: 0, scale: 0.95 }
-                                    }}
-                                    initial="initial"
-                                    animate="animate"
-                                    whileHover="hover"
-                                    exit="exit"
-                                    transition={{ duration: 0.5 }}
-                                    className="w-full h-full relative"
-                                >
-                                    <Image
-                                        src={activeProject.image}
-                                        alt={activeProject.title}
-                                        fill
-                                        className="object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
-                            {/* Overlay Gradient */}
-                            <motion.div
-                                variants={{
-                                    initial: { opacity: 1 },
-                                    hover: { opacity: 0 }
-                                }}
-                                transition={{ duration: 0.5 }}
-                                className="absolute inset-0 bg-gradient-to-t from-[#01010d] via-transparent to-transparent pointer-events-none"
-                            />
+                        <div className="relative w-full h-[350px] overflow-hidden flex items-center justify-center bg-[#0a0a18]">
+                            {activeProject.image ? (
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={activeProject.image}
+                                        variants={{
+                                            initial: { opacity: 0, scale: 1.05 },
+                                            animate: { opacity: 1, scale: 1 },
+                                            exit: { opacity: 0, scale: 0.95 }
+                                        }}
+                                        initial="initial"
+                                        animate="animate"
+                                        exit="exit"
+                                        transition={{ duration: 0.5 }}
+                                        className={`w-full h-full flex items-center justify-center p-6 ${activeProject.type === 'mobile' ? 'md:px-16' : ''}`}
+                                    >
+                                        {activeProject.type === 'mobile' ? (
+                                            /* Mobile App Phone Mockup */
+                                            <div className="relative w-[180px] h-[320px] md:w-[200px] md:h-[360px] rounded-[24px] border-2 border-[#181825] bg-[#01010d] overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                                                {/* Phone Notch */}
+                                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] h-[20px] bg-[#01010d] rounded-b-[12px] z-20 border-b border-x border-[#181825]"></div>
+                                                {/* Phone Screen */}
+                                                <div className="absolute inset-[3px] rounded-[20px] overflow-hidden">
+                                                    <img
+                                                        src={activeProject.image}
+                                                        alt={activeProject.title}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                                {/* Home Indicator */}
+                                                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[40px] h-[4px] bg-[#181825] rounded-full z-20"></div>
+                                            </div>
+                                        ) : (
+                                            /* Web App Screenshot */
+                                            <div className="relative w-full h-full rounded-lg overflow-hidden border border-[#181825]">
+                                                <img
+                                                    src={activeProject.image}
+                                                    alt={activeProject.title}
+                                                    className="w-full h-full object-cover object-center"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#01010d] via-transparent to-transparent pointer-events-none"></div>
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                </AnimatePresence>
+                            ) : (
+                                /* Placeholder for projects without images */
+                                <div className="flex flex-col items-center justify-center gap-4 p-8">
+                                    <div className="w-16 h-16 border border-[#181825] flex items-center justify-center">
+                                        <svg className="w-8 h-8 text-[#f0f0ff]/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-xs text-[#f0f0ff]/30 uppercase tracking-widest">Coming Soon</span>
+                                </div>
+                            )}
                         </div>
 
                         {/* Content */}
