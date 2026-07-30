@@ -671,7 +671,7 @@ export default function Hero() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+                <div className="flex flex-col md:flex-row items-center justify-start gap-2 md:gap-4">
                     <div className="relative w-32 h-32 md:w-[148px] md:h-[148px] flex-shrink-0 group">
                         <div className="absolute inset-0 border border-[#181825] z-0"></div>
 
@@ -719,9 +719,11 @@ export default function Hero() {
                                     opacity: 1
                                 }}
                             >
-                                <div className="relative z-10 w-[55%] h-[55%] bg-white flex items-center justify-center">
-                                    <div className="w-[50%] h-[50%] bg-[#01010d]"></div>
-                                </div>
+                                <img
+                                    src="/images/kagabo%20irene%20lucky.png"
+                                    alt="Kagabo Irene Lucky"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                             <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#01010d] shadow-[0_9px_20px_#181825] z-20 overflow-hidden"></div>
                         </div>

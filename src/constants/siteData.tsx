@@ -52,7 +52,7 @@ export const heroTypingSequence = [
 
 
 export const heroContent = {
-    name: "Lucky",
+    name: "KAGABO",
     badge: "BACKEND & AI ENGINEER",
     badgeIcon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
     subLabels: [
